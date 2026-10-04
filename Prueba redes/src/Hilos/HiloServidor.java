@@ -44,7 +44,7 @@ public class HiloServidor extends Thread{
     private void procesarMensaje(DatagramPacket dp)
     {
         String msj = new String(dp.getData()).trim();
-        System.out.println(msj);
+        System.out.println("Mensaje recibido: " + msj);
 
         if(msj.equals("Conectar"))
         {
@@ -53,12 +53,12 @@ public class HiloServidor extends Thread{
             {
                 ip1 = dp.getAddress();
                 puerto1 = dp.getPort();
-                //enviarMensaje("Conexion recibida", ip1, puerto1);
+                enviarMensaje("Conexion recibida", ip1, puerto1);
             } else if (cantConexiones == 2)
             {
                 ip2 = dp.getAddress();
                 puerto2 = dp.getPort();
-                //enviarMensaje("Conexion recibida", ip2, puerto2);
+                enviarMensaje("Conexion recibida", ip2, puerto2);
                 enviarMensaje("Empezarchat", ip1, puerto1);
                 enviarMensaje("Empezarchat", ip2, puerto2);
             } else
