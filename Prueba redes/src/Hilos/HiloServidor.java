@@ -69,11 +69,11 @@ public class HiloServidor extends Thread{
             if(dp.getAddress().equals(ip1) && dp.getPort() == puerto1)
             {
                 msj = "Cliente 1 dice: " + msj;
-                enviarMensaje(msj, ip1, puerto2);
+                enviarMensaje(msj, ip2, puerto2);
             } else if(dp.getAddress().equals(ip2) && dp.getPort() == puerto2)
             {
                 msj = "Cliente 1 dice: " + msj;
-                enviarMensaje(msj, ip2, puerto1);
+                enviarMensaje(msj, ip1, puerto1);
             } else
             {
                 enviarMensaje("Acceso denegado", dp.getAddress(), dp.getPort());
