@@ -46,24 +46,37 @@ public class HiloServidor extends Thread{
         String msj = new String(dp.getData()).trim();
         System.out.println("Mensaje recibido: " + msj);
 
-        if(msj.equals("Conectar"))
+        if(cantConexiones < 2)
         {
-            cantConexiones++;
-            if(cantConexiones == 1)
+            if(msj.equals("Conectar")) {
+                cantConexiones++;
+                if (cantConexiones == 1) {
+                    ip1 = dp.getAddress();
+                    puerto1 = dp.getPort();
+                    enviarMensaje("Conexion recibida", ip1, puerto1);
+                } else if (cantConexiones == 2) {
+                    ip2 = dp.getAddress();
+                    puerto2 = dp.getPort();
+                    enviarMensaje("Conexion recibida", ip2, puerto2);
+                    enviarMensaje("Empezarchat", ip1, puerto1);
+                    enviarMensaje("Empezarchat", ip2, puerto2);
+                } else {
+                    enviarMensaje("Sala llena", dp.getAddress(), dp.getPort());
+                }
+            }
+        } else
+        {
+            if(dp.getAddress().equals(ip1) && dp.getPort() == puerto1)
             {
-                ip1 = dp.getAddress();
-                puerto1 = dp.getPort();
-                enviarMensaje("Conexion recibida", ip1, puerto1);
-            } else if (cantConexiones == 2)
+                msj = "Cliente 1 dice: " + msj;
+                enviarMensaje(msj, ip1, puerto2);
+            } else if(dp.getAddress().equals(ip2) && dp.getPort() == puerto2)
             {
-                ip2 = dp.getAddress();
-                puerto2 = dp.getPort();
-                enviarMensaje("Conexion recibida", ip2, puerto2);
-                enviarMensaje("Empezarchat", ip1, puerto1);
-                enviarMensaje("Empezarchat", ip2, puerto2);
+                msj = "Cliente 1 dice: " + msj;
+                enviarMensaje(msj, ip2, puerto1);
             } else
             {
-                enviarMensaje("Sala llena", dp.getAddress(), dp.getPort());
+                enviarMensaje("Acceso denegado", dp.getAddress(), dp.getPort());
             }
         }
     }

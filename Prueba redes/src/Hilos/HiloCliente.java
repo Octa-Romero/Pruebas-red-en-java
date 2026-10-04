@@ -43,10 +43,12 @@ public class HiloCliente extends Thread{
 
     private void procesarMensaje(DatagramPacket dp) {
         String msj = new String(dp.getData()).trim();
-        System.out.println("Mensaje del servidor: " + msj);
         if(msj.equals("Empezarchat"))
         {
             cliente.empezarChat(true);
+        } else
+        {
+            System.out.println(msj);
         }
     }
 
@@ -61,6 +63,4 @@ public class HiloCliente extends Thread{
             throw new RuntimeException(e);
         }
     }
-
-
 }
